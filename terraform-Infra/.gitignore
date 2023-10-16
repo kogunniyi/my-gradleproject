@@ -1,0 +1,7 @@
+resources.tfvars
+terraform.*
+*.terraform
+*.terraform.*
+keypair.pem
+vault2.tfvars
+resources.tfvars

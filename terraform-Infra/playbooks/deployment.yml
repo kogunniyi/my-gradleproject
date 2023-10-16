@@ -1,0 +1,45 @@
+---
+- hosts: localhost
+  become: true
+
+  tasks:
+
+    - name: Check if Application Repo exists
+      stat:
+        path: /home/ubuntu/my-gradleproject
+      register: repo_exists
+
+    - name: Clone or Update Application Repo
+      git:
+        repo: https://github.com/kogunniyi/my-gradleproject.git
+        dest: /home/ubuntu/my-gradleproject
+      when: not repo_exists.stat.exists
+
+    - name: Updating Application Repo
+      shell:
+        cmd: git pull
+        chdir: /home/ubuntu/my-gradleproject
+      when: repo_exists.stat.exists
+
+    - name: Building Application war Artifact
+      shell: sudo su -c './gradlew build' ubuntu
+      args:
+        chdir: /home/ubuntu/my-gradleproject
+
+    - name: Building Docker image
+      shell: sudo su -c 'docker build -t kogunniyi/app .' ubuntu
+      args:
+        chdir: /home/ubuntu/my-gradleproject
+
+    - name: Login into DockerHub
+      shell: sudo su -c 'docker login -u kogunniyi -p Secur!ty50@' ubuntu
+    
+    - name: Push image to Dockerhub
+      shell: sudo su -c 'docker push kogunniyi/app' ubuntu
+
+    - name: Applying Latest Features to stage-shop
+      command: sudo su -c 'kubectl  apply -f /home/ubuntu/my-gradleproject/k8s-spring-boot-deployment' ubuntu
+
+    - name: Restart Application
+      command: sudo su -c 'kubectl rollout restart deployment/hello-world' ubuntu
+      ignore_errors: true
