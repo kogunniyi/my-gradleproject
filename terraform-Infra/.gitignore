@@ -5,3 +5,5 @@ terraform.*
 keypair.pem
 vault2.tfvars
 resources.tfvars
+credentials.*
+sghwj-key.pem

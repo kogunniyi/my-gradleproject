@@ -22,23 +22,23 @@
       when: repo_exists.stat.exists
 
     - name: Building Application war Artifact
-      shell: sudo su -c './gradlew build' ubuntu
-      args:
+      command: ./gradlew build
+      args: 
         chdir: /home/ubuntu/my-gradleproject
 
     - name: Building Docker image
-      shell: sudo su -c 'docker build -t kogunniyi/app .' ubuntu
+      command: docker build -t kogunniyi/app .
       args:
         chdir: /home/ubuntu/my-gradleproject
 
     - name: Login into DockerHub
-      shell: sudo su -c 'docker login -u kogunniyi -p Secur!ty50@' ubuntu
+      command: docker login -u kogunniyi -p Secur!ty50@
     
     - name: Push image to Dockerhub
-      shell: sudo su -c 'docker push kogunniyi/app' ubuntu
+      command: docker push kogunniyi/app
 
     - name: Applying Latest Features to stage-shop
-      command: sudo su -c 'kubectl  apply -f /home/ubuntu/my-gradleproject/k8s-spring-boot-deployment' ubuntu
+      command: sudo su -c 'kubectl apply -f /home/ubuntu/my-gradleproject/k8s-spring-boot-deployment.yml' ubuntu
 
     - name: Restart Application
       command: sudo su -c 'kubectl rollout restart deployment/hello-world' ubuntu
