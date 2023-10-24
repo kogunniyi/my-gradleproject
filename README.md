@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This project aims to build a highly available and scalable microservices application by creating a multi-master Kubernetes cluster using kubeadm. The cluster will be created using 3 Master nodes and 3 Worker nodes. The application will be monitored using Prometheus and Grafana. This repository contains Terraform code to deploy resources on your AWS account. Terraform is an Infrastructure as Code (IaC) tool that allows you to define and manage infrastructure resources using code. This README provides step-by-step instructions on how to execute the Terraform code in this project to deploy resources on your AWS account.
+This project aims to build a highly available and scalable microservices application by creating a multi-master Kubernetes cluster using kubeadm. The cluster will be created using 1 Master nodes and 2 Worker nodes. This repository contains Terraform code to deploy resources on your AWS account. Terraform is an Infrastructure as Code (IaC) tool that allows you to define and manage infrastructure resources using code. This README provides step-by-step instructions on how to execute the Terraform code in this project to deploy resources on your AWS account.
 
 ![Simple gradle hello world java](Architectural-Diagram.png)
 
@@ -43,7 +43,7 @@ Follow these steps to deploy resources on your AWS account using Terraform:
 Clone this GitHub repository to your local machine using the following command:
 
 ```bash
-git clone https://github.com/CloudHight/simple-gradle-HELLO-WORLD-JAVA.git
+git clone https://github.com/kogunniyi/my-gradleproject.git
 ```
 
 
@@ -52,7 +52,7 @@ git clone https://github.com/CloudHight/simple-gradle-HELLO-WORLD-JAVA.git
 Change your working directory to the cloned repository:
 
 ```bash
-cd simple-gradle-HELLO-WORLD-JAVA/
+cd my-gradleproject
 ```
 
 
@@ -82,12 +82,7 @@ instance_type                 = "t2.micro"
 ami-redhat                    = ""
 ubuntu-ami                    = ""
 instance-count                = 3
-domain_name                   = "YOUR_DOMAIN"
-domain_name2                  = "*.YOUR_DOMAIN"
-grafana_domain_hosted_zone    = "grafana.YOUR_DOMAIN"
-prometheus_domain_hosted_zone = "prometheus.YOUR_DOMAIN"
-stage_domain_hosted_zone      = "stage.YOUR_DOMAIN"
-prod_domain_name              = "prod.YOUR_DOMAIN"
+
 ```
 
 
@@ -96,7 +91,7 @@ prod_domain_name              = "prod.YOUR_DOMAIN"
 Run the following command to initialize Terraform and download the necessary providers:
 
 ```bash
-terraform init
+terraform init 
 ```
 
 
@@ -105,7 +100,7 @@ terraform init
 Run the following command to see what changes Terraform will apply without actually deploying anything:
 
 ```bash
-terraform plan -var-file my-credentials.tfvars
+terraform plan -var-file credentials.tfvars
 ```
 
 Review the output to ensure that Terraform will create the desired resources with the expected changes.
@@ -116,7 +111,7 @@ Review the output to ensure that Terraform will create the desired resources wit
 If everything looks good in the plan, proceed with deploying the resources:
 
 ```bash
-terraform apply -var-file my-credentials.tfvars
+terraform apply -var-file credentials.tfvars
 ```
 
 You will be prompted to confirm the deployment. Type yes and press Enter to proceed.

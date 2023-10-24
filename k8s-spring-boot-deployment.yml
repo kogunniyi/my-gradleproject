@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: hello-world
-          image: kogunniyi/app
+          image: kogunniyi/helloworld
           ports:
             - containerPort: 8080
           env:
